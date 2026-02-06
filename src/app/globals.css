@@ -1,0 +1,45 @@
+@import "tailwindcss";
+@import "tailwindcss" source("../src");
+@source "components/ServiceCard.tsx";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero-section {
+  position: relative;
+  height: 60vh;
+  width: 100%;
+  overflow: hidden;
+  /* Link to the SVG ID above */
+  clip-path: url(#asymmetricCurve);
+}
+
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Optional: Dark overlay to make text pop like in your image */
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}

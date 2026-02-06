@@ -1,0 +1,9 @@
+General:
+
+- Add Twitter Card and OpenGraph
+- Add Favicon
+- Look into using <Image /> instead of img compare cost differences
+
+InformationCard:
+
+- add link to about section
