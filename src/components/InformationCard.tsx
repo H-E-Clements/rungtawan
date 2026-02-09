@@ -35,8 +35,8 @@ function InformationCard({
                 <a
                     href="#"
                     className="mt-auto inline-block w-full text-center px-6 py-3
-               rounded-full bg-[#607912] text-white text-xs font-bold uppercase tracking-widest
-               shadow-sm hover:shadow-lg hover:bg-[#4d610e] hover:-translate-y-0.5
+               rounded-full bg-emerald-800 text-white text-xs font-bold uppercase tracking-widest
+               shadow-sm hover:shadow-lg hover:bg-emerald-700 hover:-translate-y-0.5
                active:translate-y-0 active:shadow-inner
                transition-all duration-300 ease-in-out cursor-pointer outline-none"
                 >

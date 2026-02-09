@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
@@ -14,6 +14,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const roboto = Roboto({
+	latin: ["latin"]
+})
+
 export const metadata: Metadata = {
   title: "Rungtawan Authentic Thai Spa",
   description: "Experience traditional Thai massage and authentic spa treatments at Rungtawan Authentic Thai Spa. Relax, unwind, and restore your wellbeing.",
@@ -25,7 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB">
+    <html lang="en-GB" className={roboto.className}>
+		
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

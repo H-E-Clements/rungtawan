@@ -4,11 +4,13 @@ import {services} from "@/data/services";
 
 function Services() {
     return (
-        <div className={"my-10"}>
-            <h1 className="flex items-center text-center my-8 font-bold text-4xl">
-                <span className="grow h-px bg-[#607912]"></span>
-                <span className="px-4">Our Services</span>
-                <span className="grow h-px bg-[#607912]"></span>
+        <div 
+			id="services"
+			className={"my-10 bg-gradient-to-br from-emerald-900 via-emerald-900 to-emerald-900 pt-6"}>
+            <h1 className="flex items-center text-center my-8 font-bold text-4xl px-16">
+                <span className="grow h-px bg-white opacity-70"></span>
+                <span className="px-4 text-white">Our Services</span>
+                <span className="grow h-px bg-white opacity-70"></span>
             </h1>
             <div className={"flex flex-nowrap gap-6 overflow-x-auto h-160 items-center p-12"}>
                 {
@@ -23,7 +25,6 @@ function Services() {
                         />
                     ))
                 }
-
             </div>
         </div>
     )

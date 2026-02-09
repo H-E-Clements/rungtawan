@@ -1,0 +1,32 @@
+import { NextResponse } from "next/server";
+import Stripe from "stripe";
+import { headers } from "next/headers";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+export async function POST(req: Request) {
+  const body = await req.text();
+  const signature = (await headers()).get("Stripe-Signature") as string;
+
+  let event: Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    );
+  } catch (err: any) {
+    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+  }
+
+  if (event.type === "payment_intent.succeeded") {
+    const paymentIntent = event.data.object as Stripe.PaymentIntent;
+    
+    // ✅ THIS IS WHERE YOU MAKE THE BOOKING
+    // Example: await db.booking.create({ data: { email: paymentIntent.receipt_email, ... } })
+    console.log("💰 Payment received! Creating booking...");
+  }
+
+  return new NextResponse("Success", { status: 200 });
+}

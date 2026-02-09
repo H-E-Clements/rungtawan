@@ -28,10 +28,12 @@ export default function Button({text} : ButtonProps) {
                     animation: rotate 4s linear infinite;
                 }
             `}</style>
-            <div className="rainbow w-fit relative z-0 bg-[#7a9915] overflow-hidden p-0.5 flex items-center justify-center rounded-full hover:scale-105 transition duration-300 active:scale-100">
-                <button className="px-8 text-lg py-3 text-white rounded-full font-medium bg-[#607912] backdrop-blur ">
+            <div className="rainbow w-fit relative z-0 bg-emerald-800 overflow-hidden p-0.5 flex items-center justify-center rounded-full hover:scale-105 transition duration-300 active:scale-100">
+                <a  
+					href="#services"
+					className="px-8 text-lg py-3 text-white rounded-full font-medium bg-emerald-800 backdrop-blur ">
                     {text}
-                </button>
+                </a>
             </div>
         </>
     );

@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from "@/components/Button";
-import ChevronButton from "@/components/ChevronButton";
+import ChevronButton from "@/components/Button";
 
 const SvgFilter = () => (
     <svg width="0" height="0" className="absolute">
@@ -20,14 +20,13 @@ function Hero() {
                 <video autoPlay muted loop playsInline className="bg-video">
                     <source src="/videos/hero-massage.mp4" type="video/mp4"/>
                 </video>
-
                 <div className="relative z-10 flex flex-col gap-6 h-full pb-24 items-center justify-center w-full pt-32 text-white text-center font-medium">
                     <p className="text-xl font-medium">Welcome to</p>
                     <h1 className="text-4xl md:text-6xl font-serif mb-4">
                         Rungtawan Authentic Thai Therapy
                     </h1>
                     <div className={"mt-auto"}>
-                        <ChevronButton />
+                        <Button text="View Services"/>
                     </div>
                 </div>
             </section>
@@ -35,4 +34,4 @@ function Hero() {
     )
 }
 
-export default Hero
+export default Hero;
