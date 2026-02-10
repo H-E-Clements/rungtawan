@@ -1,15 +1,18 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from "next/link";
 
 function Footer() {
   return (
-    <footer className="tracking-wide bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-800 px-8 sm:px-12 pt-16 pb-8">
+    <footer
+        id={"footer"}
+        className="tracking-wide bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-800 px-8 sm:px-12 pt-16 pb-8">
       {/* 4-Column Grid for Desktop (min-width: 1024px) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 xl:gap-12">
         
         {/* Column 1: Logo & Socials */}
         <div className="flex flex-col items-center">
-          <a href="/" className="relative block h-40 w-40"> 
+          <Link href="/" className="relative block h-40 w-40">
             <Image
               src="/photos/logo.webp"
               alt="Rungtawan Authentic Thai Spa"
@@ -17,7 +20,7 @@ function Footer() {
               className="object-contain"
               sizes="(max-width: 768px) 100vw, 25vw"
             />
-          </a>
+          </Link>
           <h1 className="text-slate-200 text-sm mt-4 leading-relaxed">
             Rungtawan Authentic Thai Therapy
           </h1>

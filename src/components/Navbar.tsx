@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import logo from "@/app/logo.webp";
 
 export default function Navbar() {
@@ -19,28 +20,32 @@ export default function Navbar() {
             {/* Navbar */}
             <nav className="relative h-25 flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-white text-gray-900 transition-all shadow">
                 {/* Logo */}
-                <Image src={logo} alt="Logo" width={100} height={40} />
+                <Link href="/">
+                    <Image src={logo} alt="Logo" width={100} height={40} />
+                </Link>
 
                 {/* Desktop menu */}
                 <ul className="hidden md:flex items-center space-x-24 md:pl-28 text-lg">
                     <li>
-                        <a href="#">Home</a>
+                        <Link href="/">Home</Link>
                     </li>
                     <li>
-                        <a href="#">Services</a>
+                        <a href="#services">Services</a>
                     </li>
                     <li>
-                        <a href="#">About</a>
+                        <a href="#about">About</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="#footer">Contact</a>
                     </li>
                 </ul>
 
                 {/* Desktop button */}
-                <button className="md:inline hidden bg-white hover:bg-gray-50 border border-gray-300 ml-20 px-9 py-2 rounded-full active:scale-95 transition-all">
+                <a
+                    href={"#booking"}
+                    className="md:inline hidden bg-white hover:bg-gray-50 border border-gray-300 ml-20 px-9 py-2 rounded-full active:scale-95 transition-all">
                     Get started
-                </button>
+                </a>
 
                 {/* Mobile menu button */}
                 <button
@@ -62,26 +67,18 @@ export default function Navbar() {
                 {/* Mobile menu */}
                 {menuOpen && (
                     <div className="absolute top-[70px] left-0 w-full bg-white shadow-sm p-6 md:hidden">
-                        <ul className="flex flex-col space-y-4 text-lg">
+                        <ul className="flex flex-col space-y-4 text-lg text-sm">
                             <li>
-                                <a href="#" className="text-sm">
-                                    Home
-                                </a>
+                                <Link href="/">Home</Link>
                             </li>
                             <li>
-                                <a href="#" className="text-sm">
-                                    Services
-                                </a>
+                                <a href="#services">Services</a>
                             </li>
                             <li>
-                                <a href="#" className="text-sm">
-                                    Portfolio
-                                </a>
+                                <a href="#about">About</a>
                             </li>
                             <li>
-                                <a href="#" className="text-sm">
-                                    Pricing
-                                </a>
+                                <a href="#footer">Contact</a>
                             </li>
                         </ul>
 
@@ -94,6 +91,18 @@ export default function Navbar() {
                     </div>
                 )}
             </nav>
+            <div className="bg-white border-b border-gray-200 text-gray-600 py-3 px-6 md:px-16 lg:px-24 xl:px-32">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[12px] md:text-sm">
+                    <div className="flex items-center gap-2">
+                        <span className="font-semibold text-gray-900">Phone:</span>
+                        <a href="tel:+447368961295" className="hover:text-violet-600 transition">+44 7368 961295</a>
+                    </div>
+                    <div className="flex items-center gap-2 text-center md:text-right">
+                        <span className="font-semibold text-gray-900">Address:</span>
+                        <span>62A Oldham Street, 1st Floor, Manchester, M4 1LE</span>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

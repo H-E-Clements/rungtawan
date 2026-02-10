@@ -2,48 +2,56 @@ import React from 'react';
 import Image from 'next/image';
 
 function AboutUs() {
-  return (
-    <div className="w-full h-[500px] flex justify-center items-center">
-      <div className="w-250 h-[400px] rounded-xl flex items-center px-12 relative"> 
-        
-        <div className="relative w-1/2 h-full">
-          
-          <div className="absolute bottom-[-20px] left-0 w-[220px] h-[280px] z-10">
-            <Image
-              src="/photos/about/about-statue2.jpg"
-              alt="About us image 1"
-              fill
-              className="object-cover rounded-2xl shadow-xl"
-            />
-          </div>
+    return (
+        <section
+            id="about"
+            className="w-full py-12 md:py-24 px-6 flex justify-center items-center overflow-hidden">
+            <div className="max-w-6xl w-full flex flex-col md:flex-row items-center gap-12 md:gap-20">
 
-          <div className="absolute top-[-20px] left-[120px] w-[220px] h-[280px] z-20">
-            <Image
-              src="/photos/about/about-kung.jpg"
-              alt="About us image 2"
-              fill
-              className="object-cover rounded-2xl shadow-xl"
-            />
-          </div>
-        </div>
+                {/* Images Container */}
+                <div className="relative w-full md:w-1/2 h-[350px] md:h-[450px]">
+                    {/* Background Image (Statue) */}
+                    <div className="absolute bottom-0 left-0 w-[60%] h-[80%] z-10">
+                        <Image
+                            src="/photos/about/about-statue2.jpg"
+                            alt="About us image 1"
+                            fill
+                            className="object-cover rounded-2xl shadow-lg"
+                        />
+                    </div>
 
-        <div className="w-1/2 text-white pl-8">
-			<h1 className="text-4xl font-bold text-emerald-900">Who are we?</h1>
-			<p className="mt-4 opacity-90 text-gray-800">
-				Traditional Thai massage is an ancient healing art that has been practised in Thailand for centuries. It focuses on releasing tension, improving flexibility, 
-				and restoring the body’s natural balance through rhythmic pressure and guided movement.
-			</p>
-			<br />
-			<p className="opacity-90 text-gray-800">
-				Our therapist trained in Thailand, where she learned authentic techniques rooted in this long-standing tradition. 
-				Bringing this knowledge and experience to every treatment, she combines professional expertise with a personal, 
-				caring approach to help clients relax, recover, and feel their best.
-			</p>
-        </div>
-        
-      </div>
-    </div>
-  );
+                    {/* Foreground Image (Therapist) */}
+                    <div className="absolute top-0 right-0 w-[60%] h-[80%] z-20 md:right-4">
+                        <Image
+                            src="/photos/about/about-kung.jpg"
+                            alt="About us image 2"
+                            fill
+                            className="object-cover rounded-2xl shadow-2xl"
+                        />
+                    </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="w-full md:w-1/2 flex flex-col justify-center">
+                    <h1 className="text-3xl md:text-5xl font-bold text-emerald-900 mb-6 tracking-tight">
+                        Who are we?
+                    </h1>
+                    <div className="space-y-4 text-base md:text-lg leading-relaxed text-gray-700">
+                        <p>
+                            Traditional Thai massage is an ancient healing art that has been practised in Thailand for centuries. It focuses on releasing tension, improving flexibility,
+                            and restoring the body’s natural balance through rhythmic pressure and guided movement.
+                        </p>
+                        <p>
+                            Our therapist trained in Thailand, where she learned authentic techniques rooted in this long-standing tradition.
+                            Bringing this knowledge and experience to every treatment, she combines professional expertise with a personal,
+                            caring approach to help clients relax, recover, and feel their best.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    );
 }
 
 export default AboutUs;

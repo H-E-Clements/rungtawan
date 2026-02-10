@@ -22,7 +22,9 @@ function ServiceCard({
     popular
 }: ServiceCardProps) {
     return (
-        <div className=" shrink-0 group relative h-130 w-80 p-6 flex flex-col gap-4 rounded-3xl bg-white border border-gray-300 shadow-xl transition-transform duration-500 hover:-translate-y-4 hover:cursor-pointer hover:scale-101 hover:shadow-2xl overflow-hidden">
+        <a
+            href={"#booking"}
+            className=" shrink-0 group relative h-130 w-80 p-6 flex flex-col gap-4 rounded-3xl bg-white border border-gray-300 shadow-xl transition-transform duration-500 hover:-translate-y-4 hover:cursor-pointer hover:scale-101 hover:shadow-2xl overflow-hidden">
             <div className="relative h-48 w-full shrink-0 transition-transform duration-500 group-hover:scale-101 group-hover:-translate-y-1">
                 <Image
                     src={`/photos/services/${imgSource}`}
@@ -56,7 +58,7 @@ function ServiceCard({
             <p className="mt-auto text-sm text-slate-500 line-clamp-4 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-101 group-hover:text-gray-800 group-hover:text-md ">
                 {description}
             </p>
-        </div>
+        </a>
     )
 }
 
