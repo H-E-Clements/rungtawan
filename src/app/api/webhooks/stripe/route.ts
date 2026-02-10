@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { headers } from "next/headers";
-import { db } from "@/db"; // Ensure this points to your src/db/index.ts
-import { bookings } from "@/db/schema"; // Ensure this points to your src/db/schema.ts
+import { db } from "@/db";
+import { bookings } from "@/db/schema";
+import { Resend } from "resend"; // 1. Import Resend
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const resend = new Resend(process.env.RESEND_API_KEY); // 2. Initialize Resend
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -24,7 +26,7 @@ export async function POST(req: Request) {
     const m = paymentIntent.metadata;
 
     try {
-      // 💾 THE DATABASE SAVE
+      // 💾 1. SAVE TO DATABASE
       await db.insert(bookings).values({
         firstName: m.firstName,
         lastName: m.lastName,
@@ -34,13 +36,32 @@ export async function POST(req: Request) {
         appointmentDate: new Date(m.appointmentDate),
         message: m.message,
         stripePaymentId: paymentIntent.id,
-        amountPaid: paymentIntent.amount, // Pence
+        amountPaid: paymentIntent.amount,
         paymentStatus: "paid",
       });
 
       console.log(`✅ Success! Booking saved for ${m.firstName}`);
+
+      // 📧 2. SEND EMAIL CONFIRMATION
+      if (m.email) {
+        await resend.emails.send({
+          from: "Rungtawan Thai Massage <onboarding@resend.dev>", // Replace with your domain later
+          to: m.email,
+          subject: "Booking Confirmed - Rungtawan Thai Massage",
+          html: `
+            <h1>Sawadee ka, ${m.firstName}!</h1>
+            <p>Your booking for <strong>${m.service} (${m.duration})</strong> has been confirmed.</p>
+            <p><strong>Date:</strong> ${new Date(m.appointmentDate).toLocaleDateString()}</p>
+            <p>We look forward to seeing you soon.</p>
+            <br />
+            <p>Rungtawan Thai Massage</p>
+          `,
+        });
+        console.log(`📧 Confirmation email sent to ${m.email}`);
+      }
+
     } catch (error) {
-      console.error("❌ Drizzle/DB Error:", error);
+      console.error("❌ Webhook Process Error:", error);
     }
   }
 
