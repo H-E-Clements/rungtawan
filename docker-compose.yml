@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:15-alpine
+    container_name: rungtawan-db-1
     restart: always
     environment:
       POSTGRES_USER: booking_admin
@@ -11,5 +12,28 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
 
+  web:
+    build: .
+    container_name: rungtawan-web-1
+    restart: always
+    expose:
+      - "3000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+  nginx:
+    image: nginx:alpine
+    container_name: rungtawan-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - web
 volumes:
   db_data:

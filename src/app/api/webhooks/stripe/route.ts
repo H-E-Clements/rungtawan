@@ -5,10 +5,11 @@ import { db } from "@/db";
 import { bookings } from "@/db/schema";
 import { Resend } from "resend"; // 1. Import Resend
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const resend = new Resend(process.env.RESEND_API_KEY); // 2. Initialize Resend
+
 
 export async function POST(req: Request) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const resend = new Resend(process.env.RESEND_API_KEY); // 2. Initialize Resend
   const body = await req.text();
   const signature = (await headers()).get("Stripe-Signature") as string;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
