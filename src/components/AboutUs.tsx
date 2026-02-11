@@ -10,18 +10,20 @@ function AboutUs() {
 
                 {/* Images Container */}
                 <div className="relative w-full md:w-1/2 h-[350px] md:h-[450px]">
-                    {/* Background Image (Statue) */}
-                    <div className="absolute bottom-0 left-0 w-[60%] h-[80%] z-10">
-                        <Image
-                            src="/photos/about/about-statue2.jpg"
-                            alt="About us image 1"
-                            fill
-                            className="object-cover rounded-2xl shadow-lg"
-                        />
-                    </div>
+                    {/*
+                        <div className="hidden absolute bottom-0 left-0 w-[60%] h-[80%] z-10">
+                            <Image
+                                src="/photos/about/about-statue2.jpg"
+                                alt="About us image 1"
+                                fill
+                                className="object-cover rounded-2xl shadow-lg"
+                            />
+                        </div>
+                     */}
+
 
                     {/* Foreground Image (Therapist) */}
-                    <div className="absolute top-0 right-0 w-[60%] h-[80%] z-20 md:right-4">
+                    <div className="absolute top-0 right-0 w-[80%] h-[100%] z-20 md:right-4">
                         <Image
                             src="/photos/about/kung.jpeg"
                             alt="Image of Kung Rungtawan"

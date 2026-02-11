@@ -78,7 +78,7 @@ export const services: Service[] = [
             { time: 60, cost: 80 },
             { time: 90, cost: 110 }
         ],
-        imgSource: "services-deep3.jpg",
+        imgSource: "services-deep4.jpeg",
         popular: false
     },
     {
@@ -88,7 +88,7 @@ export const services: Service[] = [
             { time: 60, cost: 60 },
             { time: 90, cost: 90 }
         ],
-        imgSource: "services-oil3.jpg",
+        imgSource: "services-oil4.jpeg",
         popular: false
     },
     {
@@ -107,7 +107,7 @@ export const services: Service[] = [
         options: [
             { time: 60, cost: 80 }
         ],
-        imgSource: "services-candle.jpg",
+        imgSource: "services-candle.jpeg",
         popular: false
     },
     {
@@ -117,7 +117,7 @@ export const services: Service[] = [
             { time: 60, cost: 80 },
             { time: 90, cost: 110 }
         ],
-        imgSource: "services-herbal.jpg",
+        imgSource: "services-compress.jpeg",
         popular: false
     },
     {
@@ -145,7 +145,7 @@ export const services: Service[] = [
         options: [
             { time: 30, cost: 35 }
         ],
-        imgSource: "services-traditional.jpg",
+        imgSource: "services-trad.jpeg",
         popular: false
     }
 ];
