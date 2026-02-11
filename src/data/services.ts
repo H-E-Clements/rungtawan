@@ -78,7 +78,7 @@ export const services: Service[] = [
             { time: 60, cost: 80 },
             { time: 90, cost: 110 }
         ],
-        imgSource: "services-deep.jpg",
+        imgSource: "services-deep3.jpg",
         popular: false
     },
     {
@@ -88,7 +88,7 @@ export const services: Service[] = [
             { time: 60, cost: 60 },
             { time: 90, cost: 90 }
         ],
-        imgSource: "services-oil.jpg",
+        imgSource: "services-oil3.jpg",
         popular: false
     },
     {

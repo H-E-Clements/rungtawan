@@ -23,8 +23,8 @@ function AboutUs() {
                     {/* Foreground Image (Therapist) */}
                     <div className="absolute top-0 right-0 w-[60%] h-[80%] z-20 md:right-4">
                         <Image
-                            src="/photos/about/about-kung.jpg"
-                            alt="About us image 2"
+                            src="/photos/about/kung.jpeg"
+                            alt="Image of Kung Rungtawan"
                             fill
                             className="object-cover rounded-2xl shadow-2xl"
                         />

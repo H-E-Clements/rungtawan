@@ -251,7 +251,7 @@ function Booking() {
                 </div>
 
                 <div className="rounded-3xl p-10 relative min-h-175.5 w-full max-w-[520px] hidden md:flex flex-col justify-end overflow-hidden">
-                    <Image src="/photos/booking/booking-background.jpg" alt="Background" fill priority className="object-cover" />
+                    <Image src="/photos/booking/kung-woman.jpeg" alt="Background" fill priority className="object-cover" />
                     <div className="absolute inset-0 bg-black/10 z-0" />
                     <div className="relative z-10"><p className="text-sm text-white mb-5"></p></div>
                 </div>

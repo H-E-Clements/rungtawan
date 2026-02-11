@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       // 📧 2. SEND EMAIL CONFIRMATION
       if (m.email) {
         await resend.emails.send({
-          from: "Rungtawan Thai Massage <onboarding@resend.dev>", // Replace with your domain later
+          from: "onboarding@resend.dev", // Replace with your domain later
           to: m.email,
           subject: "Booking Confirmed - Rungtawan Thai Massage",
           html: `
