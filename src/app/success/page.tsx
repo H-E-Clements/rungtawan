@@ -8,9 +8,12 @@ import { redirect } from 'next/navigation';
 export default async function SuccessPage({
                                               searchParams,
                                           }: {
-    searchParams: { payment_intent: string; redirected?: string };
+    // 1. Update the type to wrap searchParams in a Promise
+    searchParams: Promise<{ payment_intent: string; redirected?: string }>;
 }) {
-    const paymentIntentId = searchParams.payment_intent;
+    // 2. Await the searchParams before accessing properties
+    const resolvedParams = await searchParams;
+    const paymentIntentId = resolvedParams.payment_intent;
 
     if (!paymentIntentId) {
         redirect('/');

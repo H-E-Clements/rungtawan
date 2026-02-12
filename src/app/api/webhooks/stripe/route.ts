@@ -3,7 +3,8 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 import { db } from "@/db";
 import { bookings } from "@/db/schema";
-import { Resend } from "resend"; // 1. Import Resend
+import { Resend } from "resend";
+import {calendar} from "@/lib/googleCalendar"; // 1. Import Resend
 
 
 
@@ -43,10 +44,31 @@ export async function POST(req: Request) {
 
       console.log(`✅ Success! Booking saved for ${m.firstName}`);
 
+      const startTime = new Date(m.appointmentDate);
+      const durationMinutes = parseInt(m.duration) || 60; // Default to 60 if not found
+      const endTime = new Date(startTime.getTime() + durationMinutes * 60000);
+
+      await calendar.events.insert({
+        calendarId: process.env.GOOGLE_CALENDAR_ID,
+        requestBody: {
+          summary: `Massage: ${m.firstName} ${m.lastName}`,
+          description: `Service: ${m.service}\nDuration: ${m.duration}\nNotes: ${m.message}\nEmail: ${m.email}`,
+          start: {
+            dateTime: startTime.toISOString(),
+            timeZone: 'Europe/London', // Set to your local timezone
+          },
+          end: {
+            dateTime: endTime.toISOString(),
+            timeZone: 'Europe/London',
+          },
+        },
+      });
+      console.log(`📅 Calendar event created for ${m.firstName}`);
+
       // 📧 2. SEND EMAIL CONFIRMATION
       if (m.email) {
         await resend.emails.send({
-          from: "onboarding@resend.dev", // Replace with your domain later
+          from: "Rungtawan Thai Massage <info@rungtawanthaitherapy.co.uk>", // Replace with your domain later
           to: m.email,
           subject: "Booking Confirmed - Rungtawan Thai Massage",
           html: `
