@@ -45,6 +45,7 @@ const formSchema = z.object({
     firstName: z.string().min(2, "First name must be at least 2 characters"),
     lastName: z.string().min(2, "Last name must be at least 2 characters"),
     email: z.string().email("Please enter a valid email address"),
+    phone: z.string().min(11, "Phone number must be in the correct format"),
     birthDate: z.date({ required_error: "Please select an appointment date" }),
     time: z.string().min(1, "Please select a time slot"), // New field
     service: z.string().min(1, "Please select a service"),
@@ -66,7 +67,7 @@ function Booking() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            firstName: '', lastName: '', email: '',
+            firstName: '', lastName: '', email: '', phone: '',
             service: '', duration: '', time: '', message: '', agree: false
         },
     });
@@ -161,6 +162,10 @@ function Booking() {
                                 <FormItem><FormLabel>Email<span className="text-destructive">*</span></FormLabel><FormControl><Input required placeholder="david@company.com" {...field} className="h-12" /></FormControl><FormMessage /></FormItem>
                             )} />
 
+                            <FormField control={form.control} name="phone" render={({ field }) => (
+                                <FormItem><FormLabel>Phone Number<span className="text-destructive">*</span></FormLabel><FormControl><Input required placeholder="07463883217" {...field} className="h-12" /></FormControl><FormMessage /></FormItem>
+                            )} />
+
                             <FormField control={form.control} name="service" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Service<span className="text-destructive">*</span></FormLabel>
@@ -233,8 +238,8 @@ function Booking() {
 
                             <FormField control={form.control} name="message" render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Message<span className="text-destructive">*</span></FormLabel>
-                                    <FormControl><Textarea required placeholder="Any specific requirements..." {...field} rows={4} /></FormControl>
+                                    <FormLabel>Message</FormLabel>
+                                    <FormControl><Textarea placeholder="Any specific requirements..." {...field} rows={4} /></FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )} />
@@ -268,6 +273,18 @@ function Booking() {
                             <CheckoutForm amount={currentPrice || 0} />
                         </Elements>
                     )}
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={isTermsOpen} onOpenChange={setIsTermsOpen}>
+                <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto flex flex-col">
+                    <DialogHeader>
+                        <DialogTitle>Terms & Conditions</DialogTitle>
+                        <DialogDescription>Agree to our terms and conditions to proceed</DialogDescription>
+                    </DialogHeader>
+                    <div className="text-sm text-gray-500">
+                        this will be the terms and conditions.
+                    </div>
                 </DialogContent>
             </Dialog>
         </section>
