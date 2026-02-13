@@ -57,10 +57,10 @@ function Footer() {
           <h4 className="text-white font-semibold text-lg border-b border-emerald-700/50 pb-2">Pages</h4>
           <ul className="mt-6 space-y-4">
             <li><a href="/" className="hover:text-white text-slate-200 text-sm transition-colors">Home</a></li>
-            <li><a href="/services" className="hover:text-white text-slate-200 text-sm transition-colors">Services</a></li>
-            <li><a href="/about" className="hover:text-white text-slate-200 text-sm transition-colors">About Us</a></li>
-            <li><a href="/contact" className="hover:text-white text-slate-200 text-sm transition-colors">Contact</a></li>
-            <li><a href="/book" className="hover:text-white text-slate-200 text-sm transition-colors font-semibold">Book Now</a></li>
+            <li><a href="#services" className="hover:text-white text-slate-200 text-sm transition-colors">Services</a></li>
+            <li><a href="#about" className="hover:text-white text-slate-200 text-sm transition-colors">About Us</a></li>
+            <li><a href="#contact" className="hover:text-white text-slate-200 text-sm transition-colors">Contact</a></li>
+            <li><a href="#book" className="hover:text-white text-slate-200 text-sm transition-colors font-semibold">Book Now</a></li>
           </ul>
         </div>
 
