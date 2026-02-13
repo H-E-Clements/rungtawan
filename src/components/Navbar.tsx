@@ -10,7 +10,7 @@ export default function Navbar() {
     return (
         <div className="text-sm text-white w-full">
             {/* Top banner */}
-            <div className="text-center font-medium py-2 bg-gradient-to-r from-violet-500 via-[#9938CA] to-[#E0724A]">
+            <div className="text-center font-medium py-2 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-700">
                 <p>
                     Exclusive Price Drop! Hurry,{" "}
                     <span className="underline underline-offset-2">Offer Ends Soon!</span>
