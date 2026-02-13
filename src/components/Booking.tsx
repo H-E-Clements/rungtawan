@@ -246,7 +246,7 @@ function Booking() {
                             )} />
 
                             <FormField control={form.control} name="agree" render={({ field }) => (
-                                <FormItem><div className="flex flex-row items-start space-x-3 py-4"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange}/></FormControl><FormLabel className="text-sm text-gray-500">Agree to <span className="text-decoration-line" onClick={(prev) => setIsTermsOpen(!prev)}>terms & conditions</span><span className="text-destructive">*</span></FormLabel></div><FormMessage /></FormItem>
+                                <FormItem><div className="flex flex-row items-start space-x-3 py-4"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange}/></FormControl><FormLabel className="text-sm text-gray-500">Agree to <span className="underline cursor-pointer hover:text-emerald-700" onClick={() => setIsTermsOpen(true)}>terms & conditions</span><span className="text-destructive">*</span></FormLabel></div><FormMessage /></FormItem>
                             )} />
 
                             <Button type="submit" className="w-full py-6 bg-emerald-900 hover:bg-emerald-800 text-white font-medium">
