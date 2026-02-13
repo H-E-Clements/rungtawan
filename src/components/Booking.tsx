@@ -60,6 +60,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 function Booking() {
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+    const [isTermsOpen, setIsTermsOpen] = useState(false);
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [bookedSlots, setBookedSlots] = useState<string[]>([]);
     const [isLoadingSlots, setIsLoadingSlots] = useState(false);
