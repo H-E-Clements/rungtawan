@@ -46,7 +46,7 @@ const formSchema = z.object({
     lastName: z.string().min(2, "Last name must be at least 2 characters"),
     email: z.string().email("Please enter a valid email address"),
     phone: z.string().min(11, "Phone number must be in the correct format"),
-    birthDate: z.date({ required_error: "Please select an appointment date" }),
+    appointmentDate: z.date({ required_error: "Please select an appointment date" }),
     time: z.string().min(1, "Please select a time slot"), // New field
     service: z.string().min(1, "Please select a service"),
     duration: z.string().min(1, "Please select a duration"),
@@ -75,7 +75,7 @@ function Booking() {
     // Watchers
     const selectedServiceTitle = form.watch("service");
     const selectedDuration = form.watch("duration");
-    const selectedDate = form.watch("birthDate");
+    const selectedDate = form.watch("appointmentDate");
 
     // Generate 10am - 8pm time slots
     const timeSlots = useMemo(() => {
@@ -117,7 +117,7 @@ function Booking() {
     async function onNext(values: z.infer<typeof formSchema>) {
         // Combine Date and Time
         const [hours, minutes] = values.time.split(":").map(Number);
-        const appointmentFullDate = new Date(values.birthDate);
+        const appointmentFullDate = new Date(values.appointmentDate);
         appointmentFullDate.setHours(hours, minutes, 0, 0);
 
         const selectedOption = selectedServiceData?.options.find(
@@ -200,7 +200,7 @@ function Booking() {
                             )} />
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <FormField control={form.control} name="birthDate" render={({ field }) => (
+                                <FormField control={form.control} name="appointmentDate" render={({ field }) => (
                                     <FormItem className="flex flex-col">
                                         <FormLabel>Appointment Date<span className="text-destructive">*</span></FormLabel>
                                         <FormControl><DatePicker value={field.value} onChange={field.onChange} /></FormControl>
