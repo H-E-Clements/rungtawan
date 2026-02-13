@@ -14,6 +14,7 @@ export async function createPaymentIntent(amount: number, formData: any) {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        phone: formData.phone,
         service: formData.service,
         duration: formData.duration,
         message: formData.message,
