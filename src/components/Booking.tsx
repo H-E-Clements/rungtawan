@@ -258,7 +258,7 @@ function Booking() {
             </div>
 
             <Dialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen}>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto flex flex-col">
                     <DialogHeader>
                         <DialogTitle>Complete Your Booking</DialogTitle>
                         <DialogDescription>Enter your card details to finalize the £{currentPrice} payment.</DialogDescription>

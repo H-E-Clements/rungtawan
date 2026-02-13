@@ -105,7 +105,7 @@ export default async function SuccessPage({
                             </div>
                             <div>
                                 <p className="font-semibold text-stone-900">Rungtawan Thai Massage</p>
-                                <p className="text-sm text-stone-500">[Your Street Address, City]</p>
+                                <p className="text-sm text-stone-500">62A Oldham Street, 1st Floor, Manchester, M4 1LE</p>
                             </div>
                         </div>
                     </div>

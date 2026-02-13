@@ -17,7 +17,7 @@ export async function createPaymentIntent(amount: number, formData: any) {
         service: formData.service,
         duration: formData.duration,
         message: formData.message,
-        appointmentDate: formData.appointmentDate,
+        appointmentDate: String(formData.appointmentDate),
       },
       receipt_email: formData.email,
     });
