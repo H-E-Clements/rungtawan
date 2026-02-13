@@ -164,7 +164,7 @@ function Booking() {
                             )} />
 
                             <FormField control={form.control} name="phone" render={({ field }) => (
-                                <FormItem><FormLabel>Phone Number<span className="text-destructive">*</span></FormLabel><FormControl><Input required placeholder="07463883217" {...field} className="h-12" /></FormControl><FormMessage /></FormItem>
+                                <FormItem><FormLabel>Phone Number<span className="text-destructive">*</span></FormLabel><FormControl><Input required placeholder="e.g 07463883217" {...field} className="h-12" /></FormControl><FormMessage /></FormItem>
                             )} />
 
                             <FormField control={form.control} name="service" render={({ field }) => (
