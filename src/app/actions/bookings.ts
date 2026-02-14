@@ -1,47 +1,85 @@
 "use server"
+
 import { db } from "@/db";
 import { bookings } from "@/db/schema";
 import { and, gte, lte } from "drizzle-orm";
-import { startOfDay, endOfDay, addMinutes, format } from "date-fns";
+import { startOfDay, endOfDay, addMinutes } from "date-fns";
+import { google } from "googleapis";
+
+// Initialize Google Calendar API
+const SCOPES = ["https://www.googleapis.com/auth/calendar.events.readonly"];
+const auth = new google.auth.JWT(
+  process.env.GOOGLE_CLIENT_EMAIL,
+  undefined,
+  process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+  SCOPES
+);
+const calendar = google.calendar({ version: "v3", auth });
 
 export async function getBookedSlots(date: Date) {
-    const dayStart = startOfDay(date);
-    const dayEnd = endOfDay(date);
+  const dayStart = startOfDay(date);
+  const dayEnd = endOfDay(date);
 
-    const existing = await db.select({
-        time: bookings.appointmentDate,
-        duration: bookings.duration // We need this to calculate the block
-    })
-        .from(bookings)
-        .where(
-            and(
-                gte(bookings.appointmentDate, dayStart),
-                lte(bookings.appointmentDate, dayEnd)
-            )
-        );
+  // 1. Fetch from your local Database
+  const existingDbBookings = await db.select({
+    time: bookings.appointmentDate,
+    duration: bookings.duration,
+  })
+  .from(bookings)
+  .where(
+    and(
+      gte(bookings.appointmentDate, dayStart),
+      lte(bookings.appointmentDate, dayEnd)
+    )
+  );
 
-    const allBookedIntervals = new Set<string>();
-
-    existing.forEach(b => {
-        const startTime = new Date(b.time);
-        const durationMinutes = parseInt(b.duration);
-
-        // Loop through the duration in 30-minute increments
-        // If a 60min massage starts at 10:30, it blocks 10:30 and 11:00
-        for (let i = 0; i < durationMinutes; i += 30) {
-            const blockedTime = addMinutes(startTime, i);
-
-            // Format to "HH:mm" using Europe/London time to match your timeSlots array
-            const timeString = blockedTime.toLocaleTimeString('en-GB', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false,
-                timeZone: 'Europe/London'
-            });
-
-            allBookedIntervals.add(timeString);
-        }
+  // 2. Fetch from Google Calendar (Treatwell, etc.)
+  let googleEvents = [];
+  try {
+    const response = await calendar.events.list({
+      calendarId: process.env.GOOGLE_CALENDAR_ID, // Your client's calendar ID
+      timeMin: dayStart.toISOString(),
+      timeMax: dayEnd.toISOString(),
+      singleEvents: true,
     });
+    googleEvents = response.data.items || [];
+  } catch (error) {
+    console.error("Google Calendar API Error:", error);
+  }
 
-    return Array.from(allBookedIntervals);
+  const allBookedIntervals = new Set<string>();
+
+  // Process Database Bookings
+  existingDbBookings.forEach((b) => {
+    const startTime = new Date(b.time);
+    const durationMinutes = parseInt(b.duration);
+    addSlotsToSet(startTime, durationMinutes, allBookedIntervals);
+  });
+
+  // Process Google Calendar Events
+  googleEvents.forEach((event) => {
+    if (event.start?.dateTime && event.end?.dateTime) {
+      const start = new Date(event.start.dateTime);
+      const end = new Date(event.end.dateTime);
+      // Calculate duration in minutes
+      const durationMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
+      addSlotsToSet(start, durationMinutes, allBookedIntervals);
+    }
+  });
+
+  return Array.from(allBookedIntervals);
+}
+
+// Helper to handle the 30-min interval logic
+function addSlotsToSet(startTime: Date, duration: number, set: Set<string>) {
+  for (let i = 0; i < duration; i += 30) {
+    const blockedTime = addMinutes(startTime, i);
+    const timeString = blockedTime.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      timeZone: 'Europe/London'
+    });
+    set.add(timeString);
+  }
 }
