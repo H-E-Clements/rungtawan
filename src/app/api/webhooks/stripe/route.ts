@@ -33,6 +33,7 @@ export async function POST(req: Request) {
         firstName: m.firstName,
         lastName: m.lastName,
         email: m.email,
+        phone: m.phone,
         service: m.service,
         duration: m.duration,
         appointmentDate: new Date(m.appointmentDate),
@@ -52,10 +53,10 @@ export async function POST(req: Request) {
         calendarId: process.env.GOOGLE_CALENDAR_ID,
         requestBody: {
           summary: `Massage: ${m.firstName} ${m.lastName}`,
-          description: `Service: ${m.service}\nDuration: ${m.duration}\nNotes: ${m.message}\nEmail: ${m.email}`,
+          description: `Service: ${m.service}\nDuration: ${m.duration}\nNotes: ${m.message}\nEmail: ${m.email}\nPhone number: ${m.phone}`,
           start: {
             dateTime: startTime.toISOString(),
-            timeZone: 'Europe/London', // Set to your local timezone
+            timeZone: 'Europe/London',
           },
           end: {
             dateTime: endTime.toISOString(),
