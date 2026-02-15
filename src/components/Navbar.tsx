@@ -65,31 +65,32 @@ export default function Navbar() {
                 </button>
 
                 {/* Mobile menu */}
-                {menuOpen && (
-                    <div className="absolute top-[70px] left-0 w-full bg-white shadow-sm p-6 md:hidden">
-                        <ul className="flex flex-col space-y-4 text-lg text-sm">
-                            <li>
-                                <Link href="/">Home</Link>
-                            </li>
-                            <li>
-                                <a href="#services">Services</a>
-                            </li>
-                            <li>
-                                <a href="#about">About</a>
-                            </li>
-                            <li>
-                                <a href="#footer">Contact</a>
-                            </li>
-                        </ul>
+{menuOpen && (
+    <div className="absolute top-full left-0 w-full bg-white shadow-lg p-6 md:hidden z-50">
+        <ul className="flex flex-col space-y-4"> {/* Removed conflicting text-lg text-sm */}
+            <li className="text-gray-900 text-lg">
+                <Link href="/" onClick={() => setMenuOpen(false)}>Home</Link>
+            </li>
+            <li className="text-gray-900 text-lg">
+                <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+            </li>
+            <li className="text-gray-900 text-lg">
+                <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+            </li>
+            <li className="text-gray-900 text-lg">
+                <a href="#footer" onClick={() => setMenuOpen(false)}>Contact</a>
+            </li>
+        </ul>
 
-                        <button
-                            type="button"
-                            className="bg-white text-gray-600 border border-gray-300 mt-6 text-sm hover:bg-gray-50 active:scale-95 transition-all w-40 h-11 rounded-full"
-                        >
-                            Get started
-                        </button>
-                    </div>
-                )}
+        <button
+            type="button"
+            className="bg-emerald-800 text-white mt-6 px-8 h-11 rounded-full active:scale-95 transition-all w-full"
+        >
+            Get started
+        </button>
+    </div>
+)}
+
             </nav>
             <div className="bg-white border-b border-gray-200 text-gray-600 py-3 px-6 md:px-16 lg:px-24 xl:px-32">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[12px] md:text-sm">
