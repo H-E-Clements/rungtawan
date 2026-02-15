@@ -5,16 +5,8 @@ import { bookings } from "@/db/schema";
 import { and, gte, lte } from "drizzle-orm";
 import { startOfDay, endOfDay, addMinutes } from "date-fns";
 import { google } from "googleapis";
+import { calendar } from "@/lib/Google calendar";
 
-// Initialize Google Calendar API
-const SCOPES = ["https://www.googleapis.com/auth/calendar.events.readonly"];
-const auth = new google.auth.JWT(
-  process.env.GOOGLE_CLIENT_EMAIL,
-  undefined,
-  process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"), 
-  SCOPES
-);
-const calendar = google.calendar({ version: "v3", auth });
 
 export async function getBookedSlots(date: Date) {
   const dayStart = startOfDay(date);
