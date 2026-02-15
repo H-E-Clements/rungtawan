@@ -5,7 +5,7 @@ import { bookings } from "@/db/schema";
 import { and, gte, lte } from "drizzle-orm";
 import { startOfDay, endOfDay, addMinutes } from "date-fns";
 import { google } from "googleapis";
-
+import {calendar} from "@/lib/googleCalendar";
 
 
 export async function getBookedSlots(date: Date) {
