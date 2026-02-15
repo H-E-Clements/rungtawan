@@ -2,7 +2,7 @@
 
 docker-compose down
 
-docker-compose system prune -f
+docker system prune -f
 
 docker-compose up -d --build
 
