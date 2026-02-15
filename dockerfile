@@ -1,11 +1,11 @@
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 # Note: If your config file is .js, change .ts to .js below
 COPY --from=builder /app/next.config.ts ./ 
