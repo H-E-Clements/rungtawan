@@ -13,7 +13,7 @@ export default function Navbar() {
             <div className="text-center font-medium py-2 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-700">
                 <p>
                     Exclusive Price Drop! Hurry,{" "}
-                    <span className="underline underline-offset-2">Offer Ends Soon!</span>
+                    <a href="#services" className="underline underline-offset-2">Offer Ends Soon!</a>
                 </p>
             </div>
 
