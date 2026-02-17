@@ -6,6 +6,7 @@ type InformationCardProps = {
     description: string;
     imgSource: string;
     cta: string;
+    dest: string;
 };
 
 function InformationCard({
@@ -33,7 +34,7 @@ function InformationCard({
                     {description}
                 </p>
                 <a
-                    href="#"
+                    href="#${dest}"
                     className="mt-auto inline-block w-full text-center px-6 py-3
                rounded-full bg-emerald-800 text-white text-xs font-bold uppercase tracking-widest
                shadow-sm hover:shadow-lg hover:bg-emerald-700 hover:-translate-y-0.5
