@@ -20,7 +20,7 @@ function Hero() {
                 <video autoPlay muted loop playsInline className="bg-video">
                     <source src="/videos/hero-massage.mp4" type="video/mp4"/>
                 </video>
-                <div className="relative z-10 flex flex-col gap-6 h-full pb-24 items-center justify-center w-full pt-32 text-white text-center font-medium">
+                <div className="relative z-10 flex flex-col gap-6 h-full pb-24 items-center justify-center w-full pt-24 text-white text-center font-medium">
                     <p className="text-xl font-medium">Welcome to</p>
                     <h1 className="text-4xl md:text-6xl font-serif mb-4">
                         Rungtawan Authentic Thai Therapy
