@@ -84,7 +84,7 @@ export default function Navbar() {
 
         <a  href={"#booking"}
             type="button"
-            className="bg-emerald-800 text-white mt-6 px-8 h-11 rounded-full active:scale-95 transition-all w-full"
+            className="flex items-center justify-center bg-emerald-800 text-white mt-6 p-8 h-11 rounded-full active:scale-95 transition-all w-full"
         >
             Book Now
         </a>
