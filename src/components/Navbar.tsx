@@ -44,7 +44,7 @@ export default function Navbar() {
                 <a
                     href={"#booking"}
                     className="md:inline hidden bg-white hover:bg-gray-50 border border-gray-300 ml-20 px-9 py-2 rounded-full active:scale-95 transition-all">
-                    Get started
+                    Book Now
                 </a>
 
                 {/* Mobile menu button */}
@@ -82,12 +82,12 @@ export default function Navbar() {
             </li>
         </ul>
 
-        <button
+        <a  href={"#booking"}
             type="button"
             className="bg-emerald-800 text-white mt-6 px-8 h-11 rounded-full active:scale-95 transition-all w-full"
         >
-            Get started
-        </button>
+            Book Now
+        </a>
     </div>
 )}
 
