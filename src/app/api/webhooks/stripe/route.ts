@@ -71,6 +71,8 @@ export async function POST(req: Request) {
         await resend.emails.send({
           from: "Rungtawan Thai Massage <info@rungtawanthaitherapy.co.uk>",
           to: m.email,
+          bcc: "rungtawanthaimassage57@gmail.com",
+          reply_to: "rungtawanthaimassage57@gmail.com",
           subject: "Booking Confirmed: Your Appointment at Rungtawan Thai Massage",
           html: `
     <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f9f9f9; padding: 40px 0; color: #333;">
