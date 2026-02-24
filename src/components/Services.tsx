@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef } from 'react'; // 1. Import useRef
 import ServiceCard from "@/components/ServiceCard";
 import { services } from "@/data/services";
