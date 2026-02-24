@@ -54,6 +54,9 @@ const formSchema = z.object({
     agree: z.literal(true, {
         error_map: () => ({ message: "You must agree to the terms" }),
     }),
+    healthConsent: z.literal(true, {
+        error_map: () => ({ message: "Health consent is required for booking" }),
+    }),
 });
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -69,7 +72,7 @@ function Booking() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             firstName: '', lastName: '', email: '', phone: '',
-            service: '', duration: '', time: '', message: '', agree: false
+            service: '', duration: '', time: '', message: '', agree: false, healthConsent: false
         },
     });
 
@@ -249,6 +252,10 @@ function Booking() {
                                 <FormItem><div className="flex flex-row items-start space-x-3 py-4"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange}/></FormControl><FormLabel className="text-sm text-gray-500">Agree to <span className="underline cursor-pointer hover:text-emerald-700" onClick={() => setIsTermsOpen(true)}>terms & conditions</span><span className="text-destructive">*</span></FormLabel></div><FormMessage /></FormItem>
                             )} />
 
+                            <FormField control={form.control} name="healthConsent" render={({ field }) => (
+                                <FormItem><div className="flex flex-row items-start space-x-3 pt-2 pb-4"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange}/></FormControl><FormLabel className="text-sm text-gray-500">I explicitly consent to Rungtawan Thai Massage processing my <strong>health-related data</strong> for the purpose of providing a safe massage treatment. I understand I can withdraw this consent at any time.<span className="text-destructive">*</span></FormLabel></div><FormMessage /></FormItem>
+                            )} />
+
                             <Button type="submit" className="w-full py-6 bg-emerald-900 hover:bg-emerald-800 text-white font-medium">
                                 {currentPrice ? `Next: Pay £${currentPrice}` : "Next: Proceed to Payment"}
                             </Button>
@@ -283,8 +290,61 @@ function Booking() {
                         <DialogTitle>Terms & Conditions</DialogTitle>
                         <DialogDescription>Agree to our terms and conditions to proceed</DialogDescription>
                     </DialogHeader>
-                    <div className="text-sm text-gray-500">
-                        this will be the terms and conditions.
+                    <div className="flex-1 overflow-y-auto pr-2 space-y-6 text-sm text-gray-600 leading-relaxed">
+                        <section>
+                            <p className="font-semibold text-gray-900 mb-2">Last Updated: February 2026</p>
+                            <p>
+                                By booking a treatment with <strong>Rungtawan Thai Massage</strong>, you agree to be bound by the following terms and conditions.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">1. Bookings & Cancellations</h3>
+                            <ul className="list-disc pl-4 space-y-2">
+                                <li><strong>24-Hour Policy:</strong> We require at least 24 hours' notice for cancellations or rescheduling.</li>
+                                <li><strong>Late Cancellations:</strong> Cancellations made with less than 24 hours' notice may incur a charge of 50% of the treatment fee.</li>
+                                <li><strong>No-Shows:</strong> Failure to attend without notice will be charged at 100% of the service price.</li>
+                                <li><strong>Late Arrival:</strong> Your session may be shortened to avoid delaying the next client, but the full fee will apply.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">2. Health & Safety</h3>
+                            <ul className="list-disc pl-4 space-y-2">
+                                <li><strong>Medical Disclosure:</strong> You must inform your therapist of any medical conditions, allergies, or injuries before treatment.</li>
+                                <li><strong>Right to Refuse:</strong> We reserve the right to refuse treatment if we believe it is medically unsafe for the client.</li>
+                                <li><strong>Pregnancy:</strong> Please notify us upon booking if you are pregnant, as specific protocols apply.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">3. Professional Conduct</h3>
+                            <p className="mb-2">
+                                We maintain a strictly professional environment.
+                            </p>
+                            <div className="bg-red-50 border-l-4 border-red-400 p-3 italic text-red-700">
+                                Any illicit remarks, advances, or inappropriate behavior will result in the immediate termination of the session and a permanent ban without a refund.
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">4. Privacy (GDPR)</h3>
+                            <p>
+                                Your personal and health data is stored securely in accordance with UK Data Protection laws. We only use this information to ensure your treatment is safe and effective.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">5. Liability</h3>
+                            <p>
+                                Rungtawan Thai Massage is not responsible for the loss or damage of personal belongings brought onto the premises. Please keep valuables with you or at home.
+                            </p>
+                        </section>
+
+                        <p className="text-xs text-gray-400 pt-4 border-t border-gray-100">
+                            Governed by the laws of England and Wales.
+                            rungtawanthaimassage.co.uk
+                        </p>
                     </div>
                 </DialogContent>
             </Dialog>

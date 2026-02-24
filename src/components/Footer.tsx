@@ -1,8 +1,19 @@
-import React from 'react';
+"use client"
+
 import Image from 'next/image';
 import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import React, {useState} from "react";
 
 function Footer() {
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
   return (
     <footer
         id={"footer"}
@@ -56,7 +67,7 @@ function Footer() {
         <div>
           <h4 className="text-white font-semibold text-lg border-b border-emerald-700/50 pb-2">Pages</h4>
           <ul className="mt-6 space-y-4">
-            <li><a href="/" className="hover:text-white text-slate-200 text-sm transition-colors">Home</a></li>
+            <li><a href="#" className="hover:text-white text-slate-200 text-sm transition-colors">Home</a></li>
             <li><a href="#services" className="hover:text-white text-slate-200 text-sm transition-colors">Services</a></li>
             <li><a href="#about" className="hover:text-white text-slate-200 text-sm transition-colors">About Us</a></li>
             <li><a href="#contact" className="hover:text-white text-slate-200 text-sm transition-colors">Contact</a></li>
@@ -103,8 +114,8 @@ function Footer() {
 
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
         <ul className="flex space-x-6">
-          <li><a href="#" className="hover:text-white text-slate-400 text-xs">Privacy Policy</a></li>
-          <li><a href="#" className="hover:text-white text-slate-400 text-xs">Terms</a></li>
+          <li><button  onClick={() => setIsPrivacyOpen(true)} className="hover:text-white text-slate-400 text-xs">Privacy Policy</button></li>
+          <li><button onClick={() => setIsTermsOpen(true)} className="hover:text-white text-slate-400 text-xs">Terms</button></li>
         </ul>
 		<div className="flex items-center gap-2 text-slate-400 text-md">
   <span>Powered by</span>
@@ -128,6 +139,98 @@ function Footer() {
           © {new Date().getFullYear()} Rungtawan Authentic Thai Therapy. All rights reserved.
         </p>
       </div>
+      {/* DIALOGS */}
+      <Dialog open={isPrivacyOpen} onOpenChange={setIsPrivacyOpen}>
+        <DialogContent className="sm:max-w-[550px] max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Privacy Policy</DialogTitle>
+            <DialogDescription>How we handle your data at Rungtawan Thai Massage</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 text-sm text-gray-600 leading-relaxed pr-2">
+            <section>
+              <h4 className="font-bold text-gray-900 uppercase text-xs tracking-widest mb-2">1. The Data We Collect</h4>
+              <p>We collect Identity Data (Name), Contact Data (Phone, Email), and Health Data (Medical history). Health data is classified as "Special Category Data" under UK GDPR.</p>
+            </section>
+            <section>
+              <h4 className="font-bold text-gray-900 uppercase text-xs tracking-widest mb-2">2. Why We Need Your Data</h4>
+              <p>To manage your bookings and ensure your safety during treatments. We maintain records for 7 years as required by UK law and professional insurance providers.</p>
+            </section>
+            <section>
+              <h4 className="font-bold text-gray-900 uppercase text-xs tracking-widest mb-2">3. Sharing Your Information</h4>
+              <p>We do not sell or trade your data. Information is only shared with insurance providers or legal authorities if strictly required by law.</p>
+            </section>
+            <section>
+              <h4 className="font-bold text-gray-900 uppercase text-xs tracking-widest mb-2">4. Your Rights</h4>
+              <p>You have the right to access, correct, or request erasure of your data. Contact us at rungtawanthaimassage57@gmail.com for any data inquiries.</p>
+            </section>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* --- TERMS & CONDITIONS DIALOG --- */}
+      <Dialog open={isTermsOpen} onOpenChange={setIsTermsOpen}>
+        <DialogContent className="sm:max-w-[550px] max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Terms & Conditions</DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 overflow-y-auto pr-2 space-y-6 text-sm text-gray-600 leading-relaxed">
+            <section>
+              <p className="font-semibold text-gray-900 mb-2">Last Updated: February 2026</p>
+              <p>
+                By booking a treatment with <strong>Rungtawan Thai Massage</strong>, you agree to be bound by the following terms and conditions.
+              </p>
+            </section>
+
+            <section>
+              <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">1. Bookings & Cancellations</h3>
+              <ul className="list-disc pl-4 space-y-2">
+                <li><strong>24-Hour Policy:</strong> We require at least 24 hours' notice for cancellations or rescheduling.</li>
+                <li><strong>Late Cancellations:</strong> Cancellations made with less than 24 hours' notice may incur a charge of 50% of the treatment fee.</li>
+                <li><strong>No-Shows:</strong> Failure to attend without notice will be charged at 100% of the service price.</li>
+                <li><strong>Late Arrival:</strong> Your session may be shortened to avoid delaying the next client, but the full fee will apply.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">2. Health & Safety</h3>
+              <ul className="list-disc pl-4 space-y-2">
+                <li><strong>Medical Disclosure:</strong> You must inform your therapist of any medical conditions, allergies, or injuries before treatment.</li>
+                <li><strong>Right to Refuse:</strong> We reserve the right to refuse treatment if we believe it is medically unsafe for the client.</li>
+                <li><strong>Pregnancy:</strong> Please notify us upon booking if you are pregnant, as specific protocols apply.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">3. Professional Conduct</h3>
+              <p className="mb-2">
+                We maintain a strictly professional environment.
+              </p>
+              <div className="bg-red-50 border-l-4 border-red-400 p-3 italic text-red-700">
+                Any illicit remarks, advances, or inappropriate behavior will result in the immediate termination of the session and a permanent ban without a refund.
+              </div>
+            </section>
+
+            <section>
+              <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">4. Privacy (GDPR)</h3>
+              <p>
+                Your personal and health data is stored securely in accordance with UK Data Protection laws. We only use this information to ensure your treatment is safe and effective.
+              </p>
+            </section>
+
+            <section>
+              <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">5. Liability</h3>
+              <p>
+                Rungtawan Thai Massage is not responsible for the loss or damage of personal belongings brought onto the premises. Please keep valuables with you or at home.
+              </p>
+            </section>
+
+            <p className="text-xs text-gray-400 pt-4 border-t border-gray-100">
+              Governed by the laws of England and Wales.
+              rungtawanthaimassage.co.uk
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </footer>
   );
 };

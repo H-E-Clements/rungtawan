@@ -19,6 +19,7 @@ export async function createPaymentIntent(amount: number, formData: any) {
         duration: formData.duration,
         message: formData.message,
         appointmentDate: String(formData.appointmentDate),
+        healthConsent: String(formData.healthConsent),
       },
       receipt_email: formData.email,
     });
