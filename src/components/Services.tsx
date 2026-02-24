@@ -32,14 +32,14 @@ function Services() {
             {/* Navigation Buttons */}
             <button 
                 onClick={() => scroll('left')}
-                className="absolute left-4 top-1/2 z-10 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-2 rounded-full text-white backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
+                className="absolute left-4 top-1/2 z-10 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-2 rounded-full text-white backdrop-blur-sm transition-all opacity-100 group-hover:opacity-100"
             >
                 <ChevronLeft size={32} />
             </button>
 
             <button 
                 onClick={() => scroll('right')}
-                className="absolute right-4 top-1/2 z-10 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-2 rounded-full text-white backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
+                className="absolute right-4 top-1/2 z-10 -translate-y-1/2 bg-white/10 hover:bg-white/20 p-2 rounded-full text-white backdrop-blur-sm transition-all opacity-100 group-hover:opacity-100"
             >
                 <ChevronRight size={32} />
             </button>
