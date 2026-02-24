@@ -10,7 +10,7 @@ function Services() {
 
     const scroll = (direction) => {
         const { current } = scrollRef;
-        const scrollAmount = 400; // Adjust based on card width
+        const scrollAmount = 344; // Adjust based on card width
         if (direction === 'left') {
             current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         } else {
