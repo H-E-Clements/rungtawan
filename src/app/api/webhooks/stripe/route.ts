@@ -51,8 +51,8 @@ export async function POST(req: Request) {
         paymentStatus: "paid",
       });
       console.log(`✅ Success! Booking saved for ${m.firstName}`);
-    } catch (calError) {
-      console.error("❌ DB Error (Non-critical):", calError);
+    } catch (dbError) {
+      console.error("❌ DB Error (Non-critical):", dbError);
     }
       try {
         const startTime = new Date(m.appointmentDate);
