@@ -120,6 +120,10 @@ export async function POST(req: Request) {
                   <td style="color: #6b7280; font-size: 12px; text-transform: uppercase;">Arrival Time</td>
                   <td style="color: #064e3b; font-size: 16px; font-weight: bold; text-align: right;">${new Date(m.appointmentDate).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</td>
                 </tr>
+                <tr>
+                  <td style="color: #6b7280; font-size: 12px; text-transform: uppercase;">Your Number</td>
+                  <td style="color: #064e3b; font-size: 16px; font-weight: bold; text-align: right;">${m.phone}</td>
+                </tr>
               </table>
             </div>
   
