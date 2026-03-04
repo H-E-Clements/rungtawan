@@ -38,9 +38,10 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
                     mode="single"
                     selected={value}
                     onSelect={onChange}
-                    initialFocus
-                    // ADD THIS PROP:
-                    disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                    disabled={(date) =>
+                        date < new Date(new Date().setHours(0, 0, 0, 0)) ||
+                        date.getDay() === 0
+                    }
                 />
             </PopoverContent>
         </Popover>
