@@ -93,7 +93,7 @@ export async function POST(req: Request) {
           
           <div style="background-color: #064e3b; padding: 30px; text-align: center;">
             <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 1px;">RUNGTAWAN</h1>
-            <p style="color: #d1fae5; margin: 5px 0 0 0; font-size: 14px; text-transform: uppercase;">Thai Therapy & Massage</p>
+            <p style="color: #d1fae5; margin: 5px 0 0 0; font-size: 14px; text-transform: uppercase;">Authentic Thai Therapy</p>
           </div>
   
           <div style="padding: 40px 30px;">
