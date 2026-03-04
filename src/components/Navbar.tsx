@@ -36,7 +36,7 @@ export default function Navbar() {
                         <a href="#about">About</a>
                     </li>
                     <li>
-                        <a href="#footer">Contact</a>
+                        <a href="#contact">Contact</a>
                     </li>
                 </ul>
 

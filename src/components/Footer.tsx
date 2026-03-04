@@ -79,7 +79,7 @@ function Footer() {
         <div className="space-y-8">
           <div>
             <h4 className="text-white font-semibold text-lg border-b border-emerald-700/50 pb-2">Contact</h4>
-            <div className="mt-4 space-y-2">
+            <div id={"contact"} className="mt-4 space-y-2">
               <p className="text-slate-200 text-sm">Phone: <a href="tel:+447368961295" className="hover:underline">+44 7368 961295</a></p>
               <p className="text-slate-200 text-sm">Email: <a href="mailto:info@example.com" className="hover:underline">rungtawanthaimassage57@gmail.com</a></p>
             </div>
