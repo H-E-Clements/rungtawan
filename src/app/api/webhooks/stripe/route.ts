@@ -82,11 +82,11 @@ export async function POST(req: Request) {
       try {
         if (m.email) {
           await resend.emails.send({
-            from: "Rungtawan Thai Therapy <info@rungtawanthaitherapy.co.uk>",
+            from: "Rungtawan Authentic Thai Therapy <info@rungtawanthaitherapy.co.uk>",
             to: m.email,
             bcc: "rungtawanthaimassage57@gmail.com",
             replyTo: "rungtawanthaimassage57@gmail.com",
-            subject: "Booking Confirmed: Your Appointment at Rungtawan Thai Therapy",
+            subject: "Booking Confirmed: Your Appointment at Rungtawan Authentic Thai Therapy",
             html: `
       <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f9f9f9; padding: 40px 0; color: #333;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #eeeeee;">
@@ -135,7 +135,7 @@ export async function POST(req: Request) {
               If you need to reschedule or cancel, please contact us at least 24 hours in advance.
             </p>
             <p style="font-size: 12px; color: #9ca3af; margin: 10px 0 0 0;">
-              &copy; 2026 Rungtawan Thai Massage. All rights reserved.
+              &copy; 2026 Rungtawan Authentic Thai Therapy. All rights reserved.
             </p>
           </div>
         </div>
