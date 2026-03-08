@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
+import {urlFor} from "@/sanity/lib/image";
 
 type InformationCardProps = {
     title: string;
@@ -21,7 +22,7 @@ function InformationCard({
             className="flex flex-col bg-white border border-gray-200 shadow-md w-full h-full max-w-sm rounded-lg overflow-hidden mx-auto mt-4">
             <div className="relative aspect-3/2">
                 <Image
-                    src={`/photos/${imgSource}`}
+                    src={urlFor(imgSource).url()}
                     alt={title}
                     fill
                     className="object-cover"

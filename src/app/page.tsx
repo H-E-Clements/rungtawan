@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Hero from "@/components/Hero";
 import Proposition from "@/components/Proposition";
 import Services from "@/components/Services";
@@ -7,23 +6,30 @@ import Reviews from "@/components/Reviews";
 import Footer from "@/components/Footer";
 import Booking from "@/components/Booking";
 
-export default function Home() {
+import { getServices, getProposition, getSiteSettings } from "@/sanity/lib/queries";
+
+export default async function Home() {
+	const [servicesData, propositionData, settingsData] = await Promise.all([
+		getServices(),
+		getProposition(),
+		getSiteSettings(),
+	]);
+
 	return (
 		<>
 			<Hero />
 
-			<AboutUs />
+			<AboutUs settings={settingsData} />
 
-			<Services />
+			<Services services={servicesData} />
 
-			<Proposition />
-			
+			<Proposition data={propositionData} />
+
 			<Reviews />
-			
-			<Booking />
-			
-			<Footer />
 
+			<Booking initialServices={servicesData} />
+
+			<Footer />
 		</>
 	);
 }

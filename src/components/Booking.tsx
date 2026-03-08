@@ -29,7 +29,7 @@ import {
 
 import { loadStripe } from '@stripe/stripe-js';
 import { createPaymentIntent } from '@/app/actions/stripe';
-import { getBookedSlots } from '@/app/actions/bookings'; // Import your new action
+import { getBookedSlots } from '@/app/actions/bookings';
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "@/components/CheckoutForm";
 import {
@@ -39,7 +39,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { services } from "@/data/services";
 
 const formSchema = z.object({
     firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -61,12 +60,18 @@ const formSchema = z.object({
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-function Booking() {
+type BookingProps = {
+    initialServices: any[];
+};
+
+function Booking({ initialServices }: BookingProps) {
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
     const [isTermsOpen, setIsTermsOpen] = useState(false);
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [bookedSlots, setBookedSlots] = useState<string[]>([]);
     const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+    const [services, setServices] = useState<any[]>(initialServices || []);
+
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -111,7 +116,7 @@ function Booking() {
 
     const selectedServiceData = useMemo(() => {
         return services.find(s => s.title === selectedServiceTitle);
-    }, [selectedServiceTitle]);
+    }, [selectedServiceTitle, services]);
 
     const currentPrice = useMemo(() => {
         const option = selectedServiceData?.options.find(o => o.time.toString() === selectedDuration);

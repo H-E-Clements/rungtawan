@@ -1,23 +1,13 @@
-"use client";
-
-import React, { useRef } from 'react'; // 1. Import useRef
+import React from 'react';
 import ServiceCard from "@/components/ServiceCard";
-import { services } from "@/data/services";
-import { ChevronLeft, ChevronRight } from "lucide-react"; // Optional: Icon library
+import ScrollContainer from "@/components/ScrollContainer";
 
-function Services() {
-    const scrollRef = useRef(null); // 2. Create the ref
+type ServicesProps = {
+    services: any[];
+};
 
-    const scroll = (direction) => {
-        const { current } = scrollRef;
-        const scrollAmount = 344; // Adjust based on card width
-        if (direction === 'left') {
-            current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        } else {
-            current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    };
-
+function Services({ services }: ServicesProps) {
+    if (!services || services.length === 0) return null;
     return (
         <div 
             id="services"
@@ -28,34 +18,11 @@ function Services() {
                 <span className="px-4 text-white">Our Services</span>
                 <span className="grow h-px bg-white opacity-70"></span>
             </h1>
-
-            {/* Navigation Buttons */}
-            <button 
-                onClick={() => scroll('left')}
-                className="absolute left-4 top-1/2 z-10 -translate-y-1/2 bg-emerald-900 p-2 rounded-full text-white transition-all"
-            >
-                <ChevronLeft size={32} />
-            </button>
-
-            <button 
-                onClick={() => scroll('right')}
-                className="absolute right-4 top-1/2 z-10 -translate-y-1/2 bg-emerald-900 p-2 rounded-full text-white transition-all"
-            >
-                <ChevronRight size={32} />
-            </button>
-
-            {/* 3. Attach the ref and add scroll-smooth */}
-            <div 
-                ref={scrollRef}
-                className="flex flex-nowrap gap-6 overflow-x-auto h-160 items-center p-12 scroll-smooth no-scrollbar"
-            >
-                {services.map((service) => (
-                    <ServiceCard
-                        key={service.title}
-                        {...service} // Short-hand if props match keys
-                    />
+            <ScrollContainer>
+                {services.map((service: any) => (
+                    <ServiceCard key={service._id || service.title} {...service} />
                 ))}
-            </div>
+            </ScrollContainer>
         </div>
     );
 }

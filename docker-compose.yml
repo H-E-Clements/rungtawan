@@ -13,13 +13,19 @@ services:
       - db_data:/var/lib/postgresql/data
 
   web:
-    build: .
+    build:
+      context: .
+      args:
+        - NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID}
+        - NEXT_PUBLIC_SANITY_DATASET=${NEXT_PUBLIC_SANITY_DATASET}
     container_name: rungtawan-web-1
     restart: always
+    ports:
+      - "3000:3000"
     expose:
       - "3000"
     env_file:
-      - .env
+      - .env.local
     depends_on:
       - db
   nginx:
