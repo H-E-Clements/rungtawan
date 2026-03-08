@@ -20,8 +20,6 @@ services:
         - NEXT_PUBLIC_SANITY_DATASET=${NEXT_PUBLIC_SANITY_DATASET}
     container_name: rungtawan-web-1
     restart: always
-    ports:
-      - "3000:3000"
     expose:
       - "3000"
     env_file:
