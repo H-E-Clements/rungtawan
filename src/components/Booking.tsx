@@ -44,7 +44,7 @@ const formSchema = z.object({
     firstName: z.string().min(2, "First name must be at least 2 characters"),
     lastName: z.string().min(2, "Last name must be at least 2 characters"),
     email: z.string().email("Please enter a valid email address"),
-    phone: z.string().min(11, "Phone number must be in the correct format"),
+    phone: z.string().min(11, "Phone number must be in the correct format").regex(/^[0-9+\s-]*$/, "Phone number can only contain numbers, spaces, + or -"),
     appointmentDate: z.date({ required_error: "Please select an appointment date" }),
     time: z.string().min(1, "Please select a time slot"), // New field
     service: z.string().min(1, "Please select a service"),
@@ -70,7 +70,7 @@ function Booking({ initialServices }: BookingProps) {
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [bookedSlots, setBookedSlots] = useState<string[]>([]);
     const [isLoadingSlots, setIsLoadingSlots] = useState(false);
-    const [services, setServices] = useState<any[]>(initialServices || []);
+    const [calendarWarning, setCalendarWarning] = useState(false);
 
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -89,9 +89,9 @@ function Booking({ initialServices }: BookingProps) {
     // Generate 10am - 8pm time slots
     const timeSlots = useMemo(() => {
         const slots = [];
-        for (let i = 10; i <= 20; i++) {
+        for (let i = 10; i < 20; i++) {
             slots.push(`${i}:00`);
-            if (i !== 20) slots.push(`${i}:30`);
+            slots.push(`${i}:30`);
         }
         return slots;
     }, []);
@@ -100,12 +100,19 @@ function Booking({ initialServices }: BookingProps) {
     useEffect(() => {
         async function updateBookedSlots() {
             if (selectedDate) {
+                form.setValue("time", "");
+                setCalendarWarning(false);
                 setIsLoadingSlots(true);
                 try {
                     const booked = await getBookedSlots(selectedDate);
                     setBookedSlots(booked);
-                } catch (error) {
-                    console.error("Failed to fetch slots", error);
+                } catch (error: any) {
+                    if (error.message === "CALENDAR_UNAVAILABLE") {
+                        setCalendarWarning(true);
+                        setBookedSlots([]);
+                    } else {
+                        console.error("Failed to fetch slots", error);
+                    }
                 } finally {
                     setIsLoadingSlots(false);
                 }
@@ -115,8 +122,8 @@ function Booking({ initialServices }: BookingProps) {
     }, [selectedDate]);
 
     const selectedServiceData = useMemo(() => {
-        return services.find(s => s.title === selectedServiceTitle);
-    }, [selectedServiceTitle, services]);
+        return initialServices.find(s => s.title === selectedServiceTitle);
+    }, [selectedServiceTitle, initialServices]);
 
     const currentPrice = useMemo(() => {
         const option = selectedServiceData?.options.find(o => o.time.toString() === selectedDuration);
@@ -132,7 +139,12 @@ function Booking({ initialServices }: BookingProps) {
         const selectedOption = selectedServiceData?.options.find(
             opt => opt.time.toString() === values.duration
         );
-        const finalAmount = selectedOption ? selectedOption.cost : 0;
+
+        const finalAmount = selectedOption?.cost;
+        if (!finalAmount || finalAmount <= 0) {
+            alert("Could not determine the price. Please re-select your service and duration.");
+            return;
+        }
 
         try {
             // Send the combined date to the Payment Intent metadata
@@ -181,10 +193,11 @@ function Booking({ initialServices }: BookingProps) {
                                     <Select onValueChange={(val) => {
                                         field.onChange(val);
                                         form.setValue("duration", "");
+                                        form.setValue("time", "");
                                     }} defaultValue={field.value}>
                                         <FormControl><SelectTrigger className="h-12"><SelectValue placeholder="Select a massage" /></SelectTrigger></FormControl>
                                         <SelectContent>
-                                            {services.map((s) => (
+                                            {initialServices.map((s) => (
                                                 <SelectItem key={s.title} value={s.title}>{s.title}</SelectItem>
                                             ))}
                                         </SelectContent>
@@ -196,7 +209,10 @@ function Booking({ initialServices }: BookingProps) {
                             <FormField control={form.control} name="duration" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Duration<span className="text-destructive">*</span></FormLabel>
-                                    <Select onValueChange={field.onChange} value={field.value} disabled={!selectedServiceTitle}>
+                                    <Select onValueChange={(val) => {
+                                        field.onChange(val);
+                                        form.setValue("time", "");
+                                    }} value={field.value} disabled={!selectedServiceTitle}>
                                         <FormControl><SelectTrigger className="h-12"><SelectValue placeholder={selectedServiceTitle ? "Pick a time" : "Select service first"} /></SelectTrigger></FormControl>
                                         <SelectContent>
                                             {selectedServiceData?.options.map((opt) => (
@@ -207,6 +223,12 @@ function Booking({ initialServices }: BookingProps) {
                                     <FormMessage />
                                 </FormItem>
                             )} />
+
+                            {calendarWarning && (
+                                <p className="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+                                    Live availability could not be loaded. Some slots may appear free but already be taken — please contact us to confirm your time.
+                                </p>
+                            )}
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <FormField control={form.control} name="appointmentDate" render={({ field }) => (
@@ -231,7 +253,32 @@ function Booking({ initialServices }: BookingProps) {
                                                 className="max-h-[200px] w-[var(--radix-select-trigger-width)] overflow-y-auto shadow-md"
                                             >
                                                 {timeSlots.map((slot) => {
-                                                    const isBooked = bookedSlots.includes(slot);
+                                                    const isBooked = (() => {
+                                                        const now = new Date();
+                                                        const isToday = selectedDate &&
+                                                            selectedDate.getDate() === now.getDate() &&
+                                                            selectedDate.getMonth() === now.getMonth() &&
+                                                            selectedDate.getFullYear() === now.getFullYear();
+
+                                                        if (isToday) {
+                                                            const [h, m] = slot.split(":").map(Number);
+                                                            const slotMinutes = h * 60 + m;
+                                                            const nowMinutes = now.getHours() * 60 + now.getMinutes();
+                                                            if (slotMinutes <= nowMinutes) return true;
+                                                        }
+
+                                                        if (!selectedDuration) return bookedSlots.includes(slot);
+                                                        const [h, m] = slot.split(":").map(Number);
+                                                        const slotStart = h * 60 + m;
+                                                        const slotEnd = slotStart + parseInt(selectedDuration);
+                                                        if (slotEnd > 1200) return true;
+                                                        for (let t = slotStart; t < slotEnd; t += 30) {
+                                                            const hh = String(Math.floor(t / 60)).padStart(2, "0");
+                                                            const mm = String(t % 60).padStart(2, "0");
+                                                            if (bookedSlots.includes(`${hh}:${mm}`)) return true;
+                                                        }
+                                                        return false;
+                                                    })();
                                                     return (
                                                         <SelectItem key={slot} value={slot} disabled={isBooked}>
                                                             {slot} {isBooked ? "(Booked)" : ""}
@@ -306,8 +353,8 @@ function Booking({ initialServices }: BookingProps) {
                         <section>
                             <h3 className="font-bold text-gray-900 uppercase tracking-wide text-xs mb-2">1. Bookings & Cancellations</h3>
                             <ul className="list-disc pl-4 space-y-2">
-                                <li><strong>24-Hour Policy:</strong> We require at least 24 hours' notice for cancellations or rescheduling.</li>
-                                <li><strong>Late Cancellations:</strong> Cancellations made with less than 24 hours' notice may incur a charge of 50% of the treatment fee.</li>
+                                <li><strong>24-Hour Policy:</strong> We require at least 24 hours&#39; notice for cancellations or rescheduling.</li>
+                                <li><strong>Late Cancellations:</strong> Cancellations made with less than 24 hours&#39; notice may incur a charge of 50% of the treatment fee.</li>
                                 <li><strong>No-Shows:</strong> Failure to attend without notice will be charged at 100% of the service price.</li>
                                 <li><strong>Late Arrival:</strong> Your session may be shortened to avoid delaying the next client, but the full fee will apply.</li>
                             </ul>

@@ -17,7 +17,7 @@ export async function createPaymentIntent(amount: number, formData: any) {
         phone: formData.phone,
         service: formData.service,
         duration: formData.duration,
-        message: formData.message,
+        message: formData.message?.substring(0, 490) ?? '',
         appointmentDate: String(formData.appointmentDate),
         healthConsent: String(formData.healthConsent),
       },
