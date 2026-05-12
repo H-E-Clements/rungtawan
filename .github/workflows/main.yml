@@ -11,6 +11,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           context: .
           push: true
           tags: hc330/rungtawan-web:latest
