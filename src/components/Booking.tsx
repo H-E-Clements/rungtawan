@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { format as formatDate, fromZonedTime } from 'date-fns-tz'; // FIX 2: added import
 
 import { DatePicker } from "@/components/ui/DatePicker";
 import { Input } from "@/components/ui/input";
@@ -46,7 +47,7 @@ const formSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
     phone: z.string().min(11, "Phone number must be in the correct format").regex(/^[0-9+\s-]*$/, "Phone number can only contain numbers, spaces, + or -"),
     appointmentDate: z.date({ required_error: "Please select an appointment date" }),
-    time: z.string().min(1, "Please select a time slot"), // New field
+    time: z.string().min(1, "Please select a time slot"),
     service: z.string().min(1, "Please select a service"),
     duration: z.string().min(1, "Please select a duration"),
     message: z.string().min(10, "Message must be at least 10 characters"),
@@ -72,7 +73,6 @@ function Booking({ initialServices }: BookingProps) {
     const [isLoadingSlots, setIsLoadingSlots] = useState(false);
     const [calendarWarning, setCalendarWarning] = useState(false);
 
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -81,12 +81,10 @@ function Booking({ initialServices }: BookingProps) {
         },
     });
 
-    // Watchers
     const selectedServiceTitle = form.watch("service");
     const selectedDuration = form.watch("duration");
     const selectedDate = form.watch("appointmentDate");
 
-    // Generate 10am - 8pm time slots
     const timeSlots = useMemo(() => {
         const slots = [];
         for (let i = 10; i < 20; i++) {
@@ -96,7 +94,6 @@ function Booking({ initialServices }: BookingProps) {
         return slots;
     }, []);
 
-    // Fetch booked slots when date changes
     useEffect(() => {
         async function updateBookedSlots() {
             if (selectedDate) {
@@ -131,10 +128,14 @@ function Booking({ initialServices }: BookingProps) {
     }, [selectedServiceData, selectedDuration]);
 
     async function onNext(values: z.infer<typeof formSchema>) {
-        // Combine Date and Time
         const [hours, minutes] = values.time.split(":").map(Number);
-        const appointmentFullDate = new Date(values.appointmentDate);
-        appointmentFullDate.setHours(hours, minutes, 0, 0);
+
+        // FIX 2: construct the date explicitly in London time to avoid BST offset issues
+        const datePart = formatDate(values.appointmentDate, 'yyyy-MM-dd');
+        const appointmentFullDate = fromZonedTime(
+            `${datePart}T${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`,
+            'Europe/London'
+        );
 
         const selectedOption = selectedServiceData?.options.find(
             opt => opt.time.toString() === values.duration
@@ -147,10 +148,9 @@ function Booking({ initialServices }: BookingProps) {
         }
 
         try {
-            // Send the combined date to the Payment Intent metadata
             const { clientSecret } = await createPaymentIntent(finalAmount, {
                 ...values,
-                appointmentDate: appointmentFullDate.toISOString() // Pass the one with the time!
+                appointmentDate: appointmentFullDate.toISOString(),
             });
             setClientSecret(clientSecret);
             setIsCheckoutOpen(true);
