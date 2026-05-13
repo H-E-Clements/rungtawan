@@ -5,7 +5,7 @@ import { bookings } from "@/db/schema";
 import { and, gte, lte } from "drizzle-orm";
 import { addMinutes } from "date-fns";
 import { calendar } from "@/lib/googleCalendar";
-import { format, fromZonedTime } from 'date-fns-tz';
+import { format, fromZonedTime, formatInTimeZone } from 'date-fns-tz';
 
 export async function getBookedSlots(date: Date) {
   const timeZone = 'Europe/London';
@@ -66,12 +66,8 @@ function normalizeAndAddSlots(start: Date, end: Date, set: Set<string>) {
   current.setMinutes(Math.floor(current.getMinutes() / 30) * 30, 0, 0);
 
   while (current < end) {
-    const timeString = current.toLocaleTimeString('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-      timeZone: 'Europe/London'
-    });
+    // FIX 3: replaced toLocaleTimeString with formatInTimeZone for consistency
+    const timeString = formatInTimeZone(current, 'Europe/London', 'HH:mm');
     set.add(timeString);
     current.setMinutes(current.getMinutes() + 30);
   }
