@@ -54,7 +54,7 @@ function Footer() {
             </li>
             {/* Email Icon */}
             <li>
-              <a href="mailto:rungtawanthaimassage57@gmail.com" className="hover:opacity-80 transition-opacity">
+              <a href="mailto:info@rungtawanauthenticthaitherapy.com" className="hover:opacity-80 transition-opacity">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 fill-slate-200" viewBox="0 0 24 24">
                   <path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099l3.83-3.104 5.612 8.188h-18.738l5.472-8.183zm9.201-1.259l4.623-3.746v9.458l-4.623-5.712z"/>
                 </svg>
@@ -81,7 +81,7 @@ function Footer() {
             <h4 className="text-white font-semibold text-lg border-b border-emerald-700/50 pb-2">Contact</h4>
             <div id={"contact"} className="mt-4 space-y-2">
               <p className="text-slate-200 text-sm">Phone: <a href="tel:+447368961295" className="hover:underline">+44 7368 961295</a></p>
-              <p className="text-slate-200 text-sm">Email: <a href="mailto:info@example.com" className="hover:underline">rungtawanthaimassage57@gmail.com</a></p>
+              <p className="text-slate-200 text-sm">Email: <a href="mailto:info@rungtawanauthenticthaitherapy.com" className="hover:underline">info@rungtawanauthenticthaitherapy.com</a></p>
             </div>
           </div>
           <div>
